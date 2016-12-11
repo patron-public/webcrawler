@@ -16,7 +16,9 @@ public class ParseTaskQueue {
     private static ArrayBlockingQueue<ParseTask> queue = new ArrayBlockingQueue<ParseTask>(10000);
 
     public static void putTasks(List<ParseTask> taskList) {
+
         for (ParseTask task : taskList) {
+            System.out.println("Adding task :"+ task.toString());
             try {
                 queue.put(task);
             } catch (InterruptedException e) {

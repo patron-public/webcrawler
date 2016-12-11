@@ -1,5 +1,7 @@
 package com.webcrawler;
 
+import com.webcrawler.provider.index.AvIndexProvider;
+import com.webcrawler.provider.index.IndexProvider;
 import com.webcrawler.provider.outdated.AvOutdatedProvider;
 import com.webcrawler.provider.outdated.OutdatedProvider;
 import com.webcrawler.provider.recent.RecentProvider;
@@ -40,6 +42,17 @@ public class ScheduledTasks {
 
     }
 
+    @Scheduled(fixedRate = 3000)
+    public void updateIndexTasks() {
+        for (ParseTaskProvider taskProvider : new IndexProvider[]{
+                new AvIndexProvider(),
+        }) {
+            ParseTaskQueue.putTasks(taskProvider.getTasks());
+            log.info("Updating New Pages List");
+        }
+
+    }
+
     @Scheduled(fixedRate = 10000)
     public void updateOutdatedPagesTasks() {
         for (ParseTaskProvider taskProvider : new OutdatedProvider[]{
@@ -52,7 +65,7 @@ public class ScheduledTasks {
         log.info("Updating Outdated Pages List");
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedRate = 10000)
     public void peocessTaskQueue() {
         int poolSize = 1;
         ParseTaskConsumer.processQueue(poolSize);

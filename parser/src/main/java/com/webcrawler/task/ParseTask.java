@@ -47,4 +47,16 @@ public class ParseTask<T extends Parser> {
     public T getParser() {
         return parser;
     }
+
+    @Override
+    public String toString() {
+        return "ParseTask{" +
+                "parser=" + parser +
+                ", website=" + website +
+                ", url=" + url +
+                ", proxy=" + proxy +
+                ", failedProxies=" + failedProxies +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }
