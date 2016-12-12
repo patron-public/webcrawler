@@ -12,8 +12,10 @@ import java.util.Set;
  */
 public class ProxyProvider implements ContentProvider<String>, Refreshable {
 
+    private static final Logger log = LoggerFactory.getLogger(ProxyProvider.class);
+
     private ProxyProvider() {
-    };
+    }
 
     private static ProxyProvider proxyProvider;
 
@@ -23,7 +25,7 @@ public class ProxyProvider implements ContentProvider<String>, Refreshable {
         return proxyProvider;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ProxyProvider.class);
+
 
     public void updateContent() {
         log.info("Proxy List updated");

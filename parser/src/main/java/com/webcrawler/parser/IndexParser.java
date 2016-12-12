@@ -11,5 +11,5 @@ import java.util.Map;
  */
 public abstract class IndexParser implements Parser<List<Map<IndexField, String>>> {
 
-    public abstract List<Map<IndexField, String>> parse(String page);
+    //public abstract List<Map<IndexField, String>> parse(String page);
 }

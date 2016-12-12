@@ -10,5 +10,5 @@ import java.util.Map;
  */
 public abstract class  PageParser implements Parser <Map<AdField, String>>{
 
-    public abstract Map<AdField, String> parse(String page) throws ParseException;
+    //public abstract Map<AdField, String> parse(String page) throws ParseException;
 }

@@ -1,24 +1,34 @@
 package com.webcrawler.provider.index;
 
-import com.webcrawler.parser.AvPageParser;
+import com.webcrawler.model.IndexField;
+import com.webcrawler.parser.AvIndexParser;
+import com.webcrawler.task.AvIndexResultProcessor;
+import com.webcrawler.task.ResultProcessor;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
-public class AvIndexProvider extends IndexProvider<AvPageParser> {
+public class AvIndexProvider extends IndexProvider<AvIndexParser, List<Map<IndexField, String>>> {
+
+    private static final AvIndexParser PARSER = new AvIndexParser();
+    private static final ResultProcessor<List<Map<IndexField, String>>> PROCESSOR = new AvIndexResultProcessor();
 
     protected URL getIndexUrl() {
-        //TODO: fix to real page
         try {
-            return new URL("http://shop.by/");
+            return new URL("https://cars.av.by/search");
         } catch (MalformedURLException e) {
             return null;
         }
     }
 
-    public AvPageParser getParser() {
-        //TODO: fix to be singleton
-        return new AvPageParser();
+    public AvIndexParser getParser() {
+        return PARSER;
+    }
+
+    public ResultProcessor<List<Map<IndexField, String>>> getResultPrecessor() {
+        return PROCESSOR;
     }
 
 }

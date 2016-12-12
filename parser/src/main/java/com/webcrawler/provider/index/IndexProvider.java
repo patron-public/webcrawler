@@ -7,15 +7,14 @@ import com.webcrawler.task.ParseTask;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public abstract class IndexProvider<T extends Parser> implements ParseTaskProvider<T> {
+public abstract class IndexProvider<P extends Parser<R>, R> implements ParseTaskProvider<P, R>  {
 
     protected abstract URL getIndexUrl();
 
-    public List<ParseTask<T>> getTasks() {
-        List<ParseTask<T>> result = new ArrayList<ParseTask<T>>();
-        result.add(new ParseTask<T>(getIndexUrl(), getParser()));
+    public List<ParseTask<P, R>> getTasks() {
+        List<ParseTask<P, R>> result = new ArrayList<ParseTask<P, R>>();
+        result.add(new ParseTask<P, R>(getIndexUrl(), getParser(), getResultPrecessor()));
         return result;
     }
 }

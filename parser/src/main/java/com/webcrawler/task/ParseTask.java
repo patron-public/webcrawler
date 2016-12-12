@@ -1,6 +1,5 @@
 package com.webcrawler.task;
 
-import com.webcrawler.WEBSITE;
 import com.webcrawler.parser.Parser;
 
 import java.net.Proxy;
@@ -10,22 +9,18 @@ import java.util.Set;
 /**
  * Created by pavel.yakimchyk on 11.12.2016.
  */
-public class ParseTask<T extends Parser> {
+public class ParseTask<P extends Parser<R>, R> {
 
-    private T parser;
-    private WEBSITE website;
+    private P parser;
     private URL url;
     private Proxy proxy;
     private Set<Proxy> failedProxies;
-    private String data;
+    private ResultProcessor<R> resultProcessor;
 
-    public ParseTask(URL url, T parser){
+    public ParseTask(URL url, P parser, ResultProcessor<R> resultProcessor){
         this.parser = parser;
         this.url = url;
-    }
-
-    public WEBSITE getWebsite() {
-        return website;
+        this.resultProcessor = resultProcessor;
     }
 
     public URL getUrl() {
@@ -40,23 +35,22 @@ public class ParseTask<T extends Parser> {
         return failedProxies;
     }
 
-    public String getData() {
-        return data;
+    public P getParser() {
+        return parser;
     }
 
-    public T getParser() {
-        return parser;
+    public ResultProcessor<R> getResultProcessor() {
+        return resultProcessor;
     }
 
     @Override
     public String toString() {
         return "ParseTask{" +
-                "parser=" + parser +
-                ", website=" + website +
+                "parser=" + parser.getClass().getSimpleName() +
                 ", url=" + url +
                 ", proxy=" + proxy +
                 ", failedProxies=" + failedProxies +
-                ", data='" + data + '\'' +
+                ", resultProcessor='" + resultProcessor + '\'' +
                 '}';
     }
 }

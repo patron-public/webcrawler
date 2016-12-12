@@ -2,11 +2,10 @@ package com.webcrawler;
 
 import com.webcrawler.provider.index.AvIndexProvider;
 import com.webcrawler.provider.index.IndexProvider;
-import com.webcrawler.provider.outdated.AvOutdatedProvider;
-import com.webcrawler.provider.outdated.OutdatedProvider;
-import com.webcrawler.provider.recent.RecentProvider;
+import com.webcrawler.provider.pages.AvOutdatedProvider;
+import com.webcrawler.provider.pages.PagesProvider;
 import com.webcrawler.proxy.ProxyProvider;
-import com.webcrawler.provider.recent.AvRecentProvider;
+import com.webcrawler.provider.pages.AvRecentProvider;
 import com.webcrawler.provider.ParseTaskProvider;
 import com.webcrawler.task.ParseTaskConsumer;
 import org.slf4j.Logger;
@@ -25,15 +24,15 @@ public class ScheduledTasks {
 
     //private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 20000, initialDelay = 3000)
     public void updateProxyList() {
         log.info("Updating Proxy List");
         ProxyProvider.getInst().updateContent();
     }
 
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(fixedRate = 3000, initialDelay = 3000)
     public void updateRecentPagesTasks() {
-        for (ParseTaskProvider taskProvider : new RecentProvider[]{
+        for (ParseTaskProvider taskProvider : new PagesProvider[]{
                 new AvRecentProvider(),
         }) {
             ParseTaskQueue.putTasks(taskProvider.getTasks());
@@ -42,34 +41,32 @@ public class ScheduledTasks {
 
     }
 
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(fixedRate = 5000, initialDelay = 3000)
     public void updateIndexTasks() {
-        for (ParseTaskProvider taskProvider : new IndexProvider[]{
+        for (IndexProvider taskProvider : new IndexProvider[]{
                 new AvIndexProvider(),
         }) {
-            ParseTaskQueue.putTasks(taskProvider.getTasks());
             log.info("Updating New Pages List");
+            ParseTaskQueue.putTasks(taskProvider.getTasks());
         }
-
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 5000, initialDelay = 3000)
     public void updateOutdatedPagesTasks() {
-        for (ParseTaskProvider taskProvider : new OutdatedProvider[]{
+        for (PagesProvider taskProvider : new PagesProvider[]{
                 new AvOutdatedProvider(),
         }) {
+            log.info("Updating Outdated Pages List");
             ParseTaskQueue.putTasks(taskProvider.getTasks());
-            log.info("Updating New Pages List");
         }
-
-        log.info("Updating Outdated Pages List");
     }
 
-    @Scheduled(fixedRate = 10000)
-    public void peocessTaskQueue() {
+    @Scheduled(fixedDelay = 100000000, initialDelay = 3000)
+    public void processTaskQueue() {
         int poolSize = 1;
+        log.info("Start processing queue");
         ParseTaskConsumer.processQueue(poolSize);
-        log.info("Processing queue");
+
     }
 
 

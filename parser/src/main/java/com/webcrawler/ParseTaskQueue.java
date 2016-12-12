@@ -2,37 +2,30 @@ package com.webcrawler;
 
 import com.webcrawler.parser.Parser;
 import com.webcrawler.task.ParseTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by pavel.yakimchyk on 11.12.2016.
  */
 public class ParseTaskQueue {
 
-    private static ParseTaskQueue singleton;
-
-    private static ArrayBlockingQueue<ParseTask> queue = new ArrayBlockingQueue<ParseTask>(10000);
+    private static final Logger log = LoggerFactory.getLogger(ParseTaskQueue.class);
+    private static ConcurrentLinkedQueue<ParseTask> queue = new ConcurrentLinkedQueue<ParseTask>();
 
     public static void putTasks(List<ParseTask> taskList) {
 
         for (ParseTask task : taskList) {
-            System.out.println("Adding task :"+ task.toString());
-            try {
-                queue.put(task);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            log.info("Adding task :" + task.toString());
+            queue.offer(task);
+
         }
     }
 
-    public static <T extends Parser> ParseTask<T> takeTask() {
-        try {
-            return queue.take();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static <T extends Parser<M>, M> ParseTask<T, M> takeTask() {
+        return queue.poll();
     }
 }
