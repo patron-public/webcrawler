@@ -38,7 +38,6 @@ public class ScheduledTasks {
             ParseTaskQueue.putTasks(taskProvider.getTasks());
             log.info("Updating New Pages List");
         }
-
     }
 
     @Scheduled(fixedRate = 5000, initialDelay = 3000)

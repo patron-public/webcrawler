@@ -19,7 +19,7 @@ public class ParseTaskQueue {
     public static void putTasks(List<ParseTask> taskList) {
 
         for (ParseTask task : taskList) {
-            log.info("Adding task :" + task.toString());
+            log.debug("Adding task :" + task.toString());
             queue.offer(task);
 
         }
