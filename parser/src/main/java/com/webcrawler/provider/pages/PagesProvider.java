@@ -13,10 +13,12 @@ public abstract class PagesProvider<P extends Parser<R>, R> implements ParseTask
 
     protected abstract Set<URL> getUrls();
 
+    public abstract void addUrl(URL url);
+
     public List<ParseTask<P,R>> getTasks() {
         List<ParseTask<P, R>> result = new ArrayList<ParseTask<P, R>>();
         for (URL url : getUrls()) {
-            result.add(new ParseTask<P, R>(url, getParser(), getResultPrecessor()));
+            result.add(new ParseTask<P, R>(url, getParser(), getResultProcessor()));
         }
         return result;
     }

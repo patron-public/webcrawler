@@ -14,7 +14,7 @@ public abstract class IndexProvider<P extends Parser<R>, R> implements ParseTask
 
     public List<ParseTask<P, R>> getTasks() {
         List<ParseTask<P, R>> result = new ArrayList<ParseTask<P, R>>();
-        result.add(new ParseTask<P, R>(getIndexUrl(), getParser(), getResultPrecessor()));
+        result.add(new ParseTask<P, R>(getIndexUrl(), getParser(), getResultProcessor()));
         return result;
     }
 }

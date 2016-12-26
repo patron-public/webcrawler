@@ -16,8 +16,13 @@ public class AvRecentProvider extends PagesProvider<AvPageParser, Map<AdField, S
     private static final ResultProcessor<Map<AdField, String>> PROCESSOR = new AvPageResultProcessor();
     private static final AvPageParser PARSER = new AvPageParser();
 
+    private Set<URL> urls = new HashSet<URL>();
+
+    public void addUrl(URL url){
+        urls.add(url);
+    }
+
     protected Set<URL> getUrls() {
-        Set<URL> urls = new HashSet<URL>();
         //TODO: implement logic to get pages urls;
         try {
             URL url = new URL("http://onliner.by/");
@@ -30,11 +35,12 @@ public class AvRecentProvider extends PagesProvider<AvPageParser, Map<AdField, S
     }
 
 
+
     public AvPageParser getParser() {
         return PARSER;
     }
 
-    public ResultProcessor<Map<AdField, String>> getResultPrecessor() {
+    public ResultProcessor<Map<AdField, String>> getResultProcessor() {
         return PROCESSOR;
     }
 }

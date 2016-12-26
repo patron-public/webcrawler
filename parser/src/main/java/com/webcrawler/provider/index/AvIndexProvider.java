@@ -27,7 +27,7 @@ public class AvIndexProvider extends IndexProvider<AvIndexParser, List<Map<Index
         return PARSER;
     }
 
-    public ResultProcessor<List<Map<IndexField, String>>> getResultPrecessor() {
+    public ResultProcessor<List<Map<IndexField, String>>> getResultProcessor() {
         return PROCESSOR;
     }
 

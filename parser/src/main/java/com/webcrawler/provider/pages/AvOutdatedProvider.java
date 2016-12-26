@@ -21,7 +21,7 @@ public class AvOutdatedProvider extends PagesProvider<AvPageParser, Map<AdField,
 
     protected Set<URL> getUrls() {
         Set<URL> urls = new HashSet<URL>();
-//      TODO:  implement logic to get pages urls;
+//      TODO:  implement logic to get pages urls from database;
         try {
             urls.add(new URL("https://cars.av.by/outdated/12360240"));
             urls.add(new URL("https://cars.av.by/outdated/12360209"));
@@ -34,12 +34,15 @@ public class AvOutdatedProvider extends PagesProvider<AvPageParser, Map<AdField,
         return urls;
     }
 
+    public void addUrl(URL url) {
+        throw new UnsupportedOperationException();
+    }
 
     public AvPageParser getParser() {
         return PARSER;
     }
 
-    public ResultProcessor<Map<AdField, String>> getResultPrecessor() {
+    public ResultProcessor<Map<AdField, String>> getResultProcessor() {
         return PROCESSOR;
     }
 }

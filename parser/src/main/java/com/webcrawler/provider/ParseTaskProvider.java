@@ -15,6 +15,6 @@ public interface ParseTaskProvider<P extends Parser<R>, R> {
 
     P getParser();
 
-    ResultProcessor<R> getResultPrecessor();
+    ResultProcessor<R> getResultProcessor();
 
 }

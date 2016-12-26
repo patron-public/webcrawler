@@ -5,8 +5,6 @@ import com.webcrawler.provider.index.IndexProvider;
 import com.webcrawler.provider.pages.AvOutdatedProvider;
 import com.webcrawler.provider.pages.PagesProvider;
 import com.webcrawler.proxy.ProxyProvider;
-import com.webcrawler.provider.pages.AvRecentProvider;
-import com.webcrawler.provider.ParseTaskProvider;
 import com.webcrawler.task.ParseTaskConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +26,6 @@ public class ScheduledTasks {
     public void updateProxyList() {
         log.info("Updating Proxy List");
         ProxyProvider.getInst().updateContent();
-    }
-
-    @Scheduled(fixedRate = 3000, initialDelay = 3000)
-    public void updateRecentPagesTasks() {
-        for (ParseTaskProvider taskProvider : new PagesProvider[]{
-                new AvRecentProvider(),
-        }) {
-            ParseTaskQueue.putTasks(taskProvider.getTasks());
-            log.info("Updating New Pages List");
-        }
     }
 
     @Scheduled(fixedRate = 5000, initialDelay = 3000)
